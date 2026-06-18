@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  openldap:
+    # Switched from Bitnami to Osixia for stability and UI compatibility
+    image: osixia/openldap:latest
+    container_name: openldap
+    ports:
+      # Standard LDAP and Secure LDAP ports
+      - "389:389"
+      - "636:636"
+    environment:
+      # Osixia uses LDAP_DOMAIN to automatically set the Base DN (e.g., dc=example,dc=org)
+      - LDAP_ORGANISATION=Example Inc.
+      - LDAP_DOMAIN=example.org
+      - LDAP_ADMIN_PASSWORD=SecureAdminPassword123!
+    volumes:
+      # Osixia requires two volumes for data and configuration persistence
+      - openldap_data:/var/lib/ldap
+      - openldap_config:/etc/ldap/slapd.d
+    restart: unless-stopped
+
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - PHPLDAPADMIN_HTTPS=false
+    depends_on:
+      - openldap
+    restart: unless-stopped
+
+volumes:
+  openldap_data:
+    driver: local
+  openldap_config:
+    driver: local
