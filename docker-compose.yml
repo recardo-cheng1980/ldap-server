@@ -14,6 +14,7 @@ services:
       - LDAP_ORGANISATION=Example Inc.
       - LDAP_DOMAIN=example.org
       - LDAP_ADMIN_PASSWORD=SecureAdminPassword123!
+      - LDAP_TLS_VERIFY_CLIENT=allow
     volumes:
       # Osixia requires two volumes for data and configuration persistence
       - openldap_data:/var/lib/ldap
