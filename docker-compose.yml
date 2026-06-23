@@ -15,10 +15,15 @@ services:
       - LDAP_DOMAIN=example.org
       - LDAP_ADMIN_PASSWORD=SecureAdminPassword123!
       - LDAP_TLS_VERIFY_CLIENT=allow
+      - LDAP_TLS_CA_CRT_FILENAME=ca.crt
+      - LDAP_TLS_CRT_FILENAME=ldap.crt
+      - LDAP_TLS_KEY_FILENAME=ldap.key
+      
     volumes:
       # Osixia requires two volumes for data and configuration persistence
       - openldap_data:/var/lib/ldap
       - openldap_config:/etc/ldap/slapd.d
+      - /home/ext_recardo_cheng_gmail_com/ldap/certs:/container/service/slapd/assets/certs:ro
     restart: unless-stopped
 
   phpldapadmin:
