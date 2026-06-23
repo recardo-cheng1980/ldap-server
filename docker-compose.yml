@@ -23,7 +23,7 @@ services:
       # Osixia requires two volumes for data and configuration persistence
       - openldap_data:/var/lib/ldap
       - openldap_config:/etc/ldap/slapd.d
-      - /home/ext_recardo_cheng_gmail_com/ldap/certs:/container/service/slapd/assets/certs:ro
+      - /home/ext_recardo_cheng_gmail_com/ldap/certs:/container/service/slapd/assets/certs
     restart: unless-stopped
 
   phpldapadmin:
